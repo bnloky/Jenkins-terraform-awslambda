@@ -5,7 +5,7 @@ region = "ap-south-1"
 terraform {
   backend "s3" {
     bucket = "terraformbackedstatefilestore"  #mention bucket used to store the tfstatefile
-    key    = "tffiles.tfstate"                #filename for tfstate file 
+    key    = "jenskinstffiles.tfstate"                #filename for tfstate file 
     region = "ap-south-1"
   }
 }
