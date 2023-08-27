@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Init') {
           steps {
-            dir('setup'){
+            dir('./'){
               echo 'Terraform init in progress'
               sh '''
                 terraform init
