@@ -27,7 +27,7 @@ pipeline {
 
         stage ('Plan') {
             steps {
-                dir('setup') {
+                dir('./') {
                     echo 'Terraform Plan in progress'
                     sh 'terraform plan'
                 }
@@ -36,7 +36,7 @@ pipeline {
 
         stage ('Apply and deploy') {
             steps {
-                dir('setup') {
+                dir('./') {
                     echo 'Terraform Apply in progress'
                     sh 'terraform apply -auto-approve'
                 }
