@@ -4,8 +4,8 @@ region = "ap-south-1"
 
 terraform {
   backend "s3" {
-    bucket = "jenkins-pipeline-statetf"  #mention bucket used to store the tfstatefile
-    key    = "jenskinstffiles.tfstate"                #filename for tfstate file 
+    bucket = "jenkins-aws-lambdafunction"  #mention bucket used to store the tfstatefile
+    key    = "jenskinstffiles.tfstate"   #filename for tfstate file 
     region = "ap-south-1"
   }
 }
