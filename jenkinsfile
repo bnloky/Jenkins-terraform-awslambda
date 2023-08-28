@@ -23,6 +23,7 @@ pipeline {
                             -backend-config="key = tffiles.tfstate"'''
                     }
                 }
+              }
             }
         }
 
