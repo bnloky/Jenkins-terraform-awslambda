@@ -29,10 +29,8 @@ pipeline {
 
         stage ('Plan') {
             steps {
-                dir(' ./../terraformdir/') {
                     echo 'Terraform Plan in progress'
                     sh 'terraform plan'
-                }
             }
         }
 
