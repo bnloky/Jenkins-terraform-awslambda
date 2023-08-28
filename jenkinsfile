@@ -10,10 +10,15 @@ pipeline {
         stage ('Init') {
             steps {
                 script {
-                    withCredentials(['arn:aws:iam::681217613251:user/loky', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']) {
+                    withCredentials([
+                        [$class: 'AmazonWebServicesCredentialsBinding', 
+                         accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
+                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY', 
+                         credentialsId: 'arn:aws:iam::681217613251:user/loky']
+                    ]) {
                         sh '''terraform init \
-                            -backend-config="bucket=jenkins-pipeline-statetf" \
-                            -backend-config="region=ap-south-1" \
+                            -backend-config="bucket=${S3_BUCKET_NAME}" \
+                            -backend-config="region=${AWS_DEFAULT_REGION}" \
                             -backend-config="key=jenskinstffiles.tfstate"'''
                     }
                 }
