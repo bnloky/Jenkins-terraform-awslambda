@@ -12,8 +12,10 @@ pipeline {
               dir(' ./../terraformdir/') {
                 script {
                     withCredentials([
-                        string(credentialsId: 'your-aws-credentials-id', variable: 'AWS_ACCESS_KEY_ID'),
-                        string(credentialsId: 'your-aws-credentials-id', variable: 'AWS_SECRET_ACCESS_KEY') ]) {
+                        [$class: 'AmazonWebServicesCredentialsBinding', 
+                         accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
+                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY', 
+                         credentialsId: 'arn:aws:iam::681217613251:user/loky'] ]) {
                         sh '''terraform init  \
                             -backend-config="bucket=jenkins-aws-lambdafunction" \
                             -backend-config="region=ap-south-1" \
