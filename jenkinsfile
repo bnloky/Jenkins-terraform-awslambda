@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage ('Init') {
             steps {
-              dir('../terraformdir/') {
+              dir('cat ../terraformdir/') {
                 script {
                     withCredentials([
                         [$class: 'AmazonWebServicesCredentialsBinding', 
@@ -29,7 +29,7 @@ pipeline {
 
         stage ('Plan') {
             steps {
-                dir('../terraformdir/') {
+                dir('cat ../terraformdir/') {
                     echo 'Terraform Plan in progress'
                     sh 'terraform plan'
                 }
@@ -38,7 +38,7 @@ pipeline {
 
         stage ('Apply and deploy') {
             steps {
-                dir('../terraformdir') {
+                dir('cat ../terraformdir') {
                     echo 'Terraform Apply in progress'
                     sh 'terraform apply -auto-approve'
                 }
