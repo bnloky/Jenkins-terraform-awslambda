@@ -9,6 +9,7 @@ pipeline {
     stages {
         stage ('Init') {
             steps {
+              dir('./') {
                 script {
                     withCredentials([
                         [$class: 'AmazonWebServicesCredentialsBinding', 
