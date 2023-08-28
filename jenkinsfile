@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage ('Init') {
             steps {
-              dir('./') {
+              dir('./terraformfir') {
                 script {
                     withCredentials([
                         [$class: 'AmazonWebServicesCredentialsBinding', 
@@ -18,9 +18,9 @@ pipeline {
                          credentialsId: 'arn:aws:iam::681217613251:user/loky']
                     ]) {
                         sh '''terraform init  \
-                            -backend-config= "bucket = jenkins-aws-lambdafunction" \
-                            -backend-config= "region = ap-south-1" \
-                            -backend-config="key = tffiles.tfstate"'''
+                            -backend-config="bucket=jenkins-aws-lambdafunction" \
+                            -backend-config="region=ap-south-1" \
+                            -backend-config="key=tffiles.tfstate"'''
                     }
                 }
               }
@@ -29,7 +29,7 @@ pipeline {
 
         stage ('Plan') {
             steps {
-                dir('./') {
+                dir('./terraformdir') {
                     echo 'Terraform Plan in progress'
                     sh 'terraform plan'
                 }
@@ -38,7 +38,7 @@ pipeline {
 
         stage ('Apply and deploy') {
             steps {
-                dir('./') {
+                dir('./terraformdir') {
                     echo 'Terraform Apply in progress'
                     sh 'terraform apply -auto-approve'
                 }
