@@ -1,46 +1,41 @@
 pipeline {
-
     agent any
 
-         environment {
-           AWS_DEFAULT_REGION = 'ap-south-1'
-           S3_BUCKET_NAME = 'jenkins-pipeline-statetf'
-        }
+    environment {
+        AWS_DEFAULT_REGION = 'ap-south-1'
+        S3_BUCKET_NAME = 'jenkins-pipeline-statetf'
+    }
 
     stages {
         stage ('Init') {
-          steps {
+            steps {
                 script {
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-                        sh 'terraform init \
+                        sh '''terraform init \
                             -backend-config="bucket=jenkins-pipeline-statetf" \
                             -backend-config="region=ap-south-1" \
-                            -backend-config="key=jenskinstffiles.tfstate" '
+                            -backend-config="key=jenskinstffiles.tfstate"'''
                     }
-          }
+                }
+            }
         }
 
         stage ('Plan') {
-          steps {
-            dir('setup'){
-              echo 'Terraform Plan in progress'
-              sh '''
-                terraform plan
-              '''
+            steps {
+                dir('setup') {
+                    echo 'Terraform Plan in progress'
+                    sh 'terraform plan'
+                }
             }
-          }
         }
 
-      stage ('Apply and deploy') {
-        steps {
-          dir('setup'){
-            echo 'Terraform Plan in progress'
-            sh '''
-              terraform apply -auto-approve
-            '''
-          }
+        stage ('Apply and deploy') {
+            steps {
+                dir('setup') {
+                    echo 'Terraform Apply in progress'
+                    sh 'terraform apply -auto-approve'
+                }
+            }
         }
-      }
     }
-  }  
 }
