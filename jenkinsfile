@@ -17,7 +17,7 @@ pipeline {
                          secretKeyVariable: 'AWS_SECRET_ACCESS_KEY', 
                          credentialsId: 'arn:aws:iam::681217613251:user/loky']
                     ]) {
-                        sh '''terraform init -reconfigur \
+                        sh '''terraform init -reconfigure \
                             -backend-config="bucket=jenkins-aws-lambdafunction" \
                             -backend-config="region=ap-south-1" \
                             -backend-config="key=tffiles.tfstate"'''
